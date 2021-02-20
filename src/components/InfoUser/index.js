@@ -8,13 +8,19 @@ import {
   ContainerInfo,
   ButtonAddTec,
   ContainerTec,
+  EditarButton,
 } from "./style";
 
 import ImageAvatar from "../../assets/img/avatar.svg";
 
-const InfoUser = ({ user }) => {
-  const { avatar_url, name, course_module, bio } = user;
+const InfoUser = ({ user, setModalTec }) => {
+  const { avatar_url, name, course_module, bio, techs = [] } = user;
+  const [activeTec, setActiveTec] = React.useState(false);
 
+  const handlemouseTec = (e) => {
+    console.log("po");
+    setActiveTec(true);
+  };
   return (
     <>
       <Container>
@@ -35,13 +41,25 @@ const InfoUser = ({ user }) => {
         </Sobre>
 
         <ContainerTec>
-          <Tecnologias>
-            <h4>Tecnologias</h4>
-            {bio} iohnshiohnsaoisniusdnauscncsunsaocsnscansculscn
-            kimsoaincssoicncxoi
-          </Tecnologias>
+          <h4>Tecnologias</h4>
 
-          <ButtonAddTec>+</ButtonAddTec>
+          {techs.length ? (
+            <ul>
+              <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
+
+              {techs.map(({ id, title, status }) => (
+                <Tecnologias key={id} onMouseEnter={handlemouseTec}>
+                  {title}: {status}
+                  <EditarButton active={activeTec}>P</EditarButton>
+                </Tecnologias>
+              ))}
+            </ul>
+          ) : (
+            <>
+              <p>Nenhuma tecnologia cadastrada...</p>
+              <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
+            </>
+          )}
         </ContainerTec>
       </ContainerInfo>
     </>

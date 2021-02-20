@@ -41,7 +41,6 @@ const Info = styled.div`
 const Sobre = styled.div`
   width: 100%;
   max-width: 400px;
-  background-color: #e5e4e4;
   border-radius: 4px;
   color: #252525;
   padding: 25px;
@@ -62,14 +61,13 @@ const Sobre = styled.div`
 
 const ContainerTec = styled.div`
   width: 100%;
-  max-width: 400px;
-  margin: 0 1.5rem;
+  max-width: 1200px;
+  margin: 3rem;
   position: relative;
-`;
 
-const Tecnologias = styled(Sobre)`
-  margin: 0;
-  box-sizing: border-box;
+  p {
+    margin-bottom: 2rem;
+  }
 
   h4 {
     margin-bottom: 1rem;
@@ -77,19 +75,46 @@ const Tecnologias = styled(Sobre)`
     color: var(--color-theme);
     font-weight: 600;
   }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* justify-content: center; */
+    column-gap: 20px;
+  }
+`;
+
+const Tecnologias = styled.li`
+  margin: 1rem 0;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #e5e4e4;
+  padding: 20px 0;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  max-width: 19rem;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const ContainerInfo = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
 `;
 
 const ButtonAddTec = styled.button`
-  position: absolute;
   width: 100%;
-  height: 2.4rem;
-  left: 0;
-  bottom: -2.8rem;
+  max-width: 300px;
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,6 +133,11 @@ const ButtonAddTec = styled.button`
   }
 `;
 
+const EditarButton = styled.div`
+  position: absolute;
+  display: ${({ active }) => (active ? "inline-block" : "none")};
+`;
+
 export {
   Container,
   Avatar,
@@ -117,4 +147,5 @@ export {
   ContainerInfo,
   ButtonAddTec,
   ContainerTec,
+  EditarButton,
 };
