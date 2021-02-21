@@ -6,7 +6,9 @@ import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import InfoUser from "../../components/InfoUser";
 import Loading from "../../components/Loading";
-import Modal from "../../components/Modal";
+import ModalCadastroUser from "./ModalCadastroUser";
+
+const UserContext = React.createContext();
 
 const User = () => {
   const history = useHistory();
@@ -36,20 +38,22 @@ const User = () => {
 
   return (
     <div>
-      <Header />
-      <InfoUser setModalTec={setModalTec} user={user} />
+      <UserContext.Provider value={{ token, handleFetch }}>
+        <Header />
+        <InfoUser token={token} setModalTec={setModalTec} user={user} />
 
-      {modalTec && (
-        <Modal
-          setModalTec={setModalTec}
-          token={token}
-          handleFetch={handleFetch}
-        />
-      )}
+        {modalTec && (
+          <ModalCadastroUser
+            setModalTec={setModalTec}
+            token={token}
+            handleFetch={handleFetch}
+          />
+        )}
 
-      {loading && <Loading />}
+        {loading && <Loading />}
+      </UserContext.Provider>
     </div>
   );
 };
 
-export default User;
+export { User, UserContext };

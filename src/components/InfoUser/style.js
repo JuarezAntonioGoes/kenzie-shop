@@ -133,10 +133,11 @@ const ButtonAddTec = styled.button`
   }
 `;
 
-const EditarButton = styled.div`
-  position: absolute;
-  display: ${({ active }) => (active ? "inline-block" : "none")};
+const EditarButton = styled.button`
+  margin-left: 0.5rem;
 `;
+
+const DeleteButton = styled(EditarButton)``;
 
 export {
   Container,
@@ -148,4 +149,5 @@ export {
   ButtonAddTec,
   ContainerTec,
   EditarButton,
+  DeleteButton,
 };

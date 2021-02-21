@@ -9,17 +9,31 @@ import {
   ButtonAddTec,
   ContainerTec,
   EditarButton,
+  DeleteButton,
 } from "./style";
 
 import ImageAvatar from "../../assets/img/avatar.svg";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import ModalDeleteTec from "./ModalDeleteTec";
+import ModalEditTec from "./ModalEditTec";
 
-const InfoUser = ({ user, setModalTec }) => {
+const InfoUser = ({ user, setModalTec, token }) => {
   const { avatar_url, name, course_module, bio, techs = [] } = user;
-  const [activeTec, setActiveTec] = React.useState(false);
+  const [showDeleteTec, setShowDeleteTec] = React.useState(false);
+  const [showEditTec, setShowEditTec] = React.useState(false);
+  const [idTecDelete, setIdTecDelete] = React.useState("");
+  const [idTecEdit, setIdTecEdit] = React.useState("");
 
-  const handlemouseTec = (e) => {
-    console.log("po");
-    setActiveTec(true);
+  const handleDeleteTec = (e) => {
+    const id = e.currentTarget.getAttribute("data-id");
+    setIdTecDelete(id);
+    setShowDeleteTec(true);
+  };
+
+  const handleEditTec = (e) => {
+    const id = e.currentTarget.getAttribute("data-id");
+    setIdTecEdit(id);
+    setShowEditTec(true);
   };
   return (
     <>
@@ -48,9 +62,14 @@ const InfoUser = ({ user, setModalTec }) => {
               <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
 
               {techs.map(({ id, title, status }) => (
-                <Tecnologias key={id} onMouseEnter={handlemouseTec}>
+                <Tecnologias key={id}>
                   {title}: {status}
-                  <EditarButton active={activeTec}>P</EditarButton>
+                  <EditarButton onClick={handleEditTec} data-id={id}>
+                    <FiEdit2 />
+                  </EditarButton>
+                  <DeleteButton onClick={handleDeleteTec} data-id={id}>
+                    <FiTrash2 />
+                  </DeleteButton>
                 </Tecnologias>
               ))}
             </ul>
@@ -62,6 +81,17 @@ const InfoUser = ({ user, setModalTec }) => {
           )}
         </ContainerTec>
       </ContainerInfo>
+
+      {showDeleteTec && (
+        <ModalDeleteTec
+          setShowDeleteTec={setShowDeleteTec}
+          idTec={idTecDelete}
+        />
+      )}
+
+      {showEditTec && (
+        <ModalEditTec setShowEditTec={setShowEditTec} idTecEdit={idTecEdit} />
+      )}
     </>
   );
 };
