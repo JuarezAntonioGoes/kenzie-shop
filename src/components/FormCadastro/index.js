@@ -70,7 +70,6 @@ const FormCadastro = ({ setErro, setSucesso, setShowLogin }) => {
     api
       .post("/users", data)
       .then((r) => {
-        console.log(r);
         reset();
         setSucesso(true);
         setShowLogin(true);
@@ -81,7 +80,6 @@ const FormCadastro = ({ setErro, setSucesso, setShowLogin }) => {
       })
       .catch((err) => {
         setErro(true);
-        console.log(err);
 
         setTimeout(() => {
           setErro(false);

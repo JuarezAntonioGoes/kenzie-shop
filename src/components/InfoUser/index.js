@@ -63,7 +63,7 @@ const InfoUser = ({ user, setModalTec, token }) => {
 
               {techs.map(({ id, title, status }) => (
                 <Tecnologias key={id}>
-                  {title}: {status}
+                  <span>{title}</span>: {status}
                   <EditarButton onClick={handleEditTec} data-id={id}>
                     <FiEdit2 />
                   </EditarButton>

@@ -8,7 +8,7 @@ import InfoUser from "../../components/InfoUser";
 import Loading from "../../components/Loading";
 import ModalCadastroUser from "./ModalCadastroUser";
 
-const UserContext = React.createContext();
+import { UserContext } from "../../context/UserContext";
 
 const User = () => {
   const history = useHistory();
@@ -21,8 +21,8 @@ const User = () => {
   const token = localStorage.getItem("kenzie-user-tk");
 
   const handleFetch = React.useCallback(() => {
+    setLoading(true);
     api.get(`/users/${idUser}`).then((response) => {
-      console.log(response);
       setUser({ ...response.data });
       setLoading(false);
     });
@@ -37,23 +37,21 @@ const User = () => {
   }, [idUser, token, history, handleFetch]);
 
   return (
-    <div>
-      <UserContext.Provider value={{ token, handleFetch }}>
-        <Header />
-        <InfoUser token={token} setModalTec={setModalTec} user={user} />
+    <UserContext token={token} handleFetch={handleFetch}>
+      <Header />
+      <InfoUser token={token} setModalTec={setModalTec} user={user} />
 
-        {modalTec && (
-          <ModalCadastroUser
-            setModalTec={setModalTec}
-            token={token}
-            handleFetch={handleFetch}
-          />
-        )}
+      {modalTec && (
+        <ModalCadastroUser
+          setModalTec={setModalTec}
+          token={token}
+          handleFetch={handleFetch}
+        />
+      )}
 
-        {loading && <Loading />}
-      </UserContext.Provider>
-    </div>
+      {loading && <Loading />}
+    </UserContext>
   );
 };
 
-export { User, UserContext };
+export { User };

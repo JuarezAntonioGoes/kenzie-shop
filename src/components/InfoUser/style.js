@@ -103,6 +103,11 @@ const Tecnologias = styled.li`
   &:hover {
     transform: scale(1.05);
   }
+
+  span {
+    color: var(--color-theme);
+    font-weight: 600;
+  }
 `;
 
 const ContainerInfo = styled.div`
@@ -134,10 +139,27 @@ const ButtonAddTec = styled.button`
 `;
 
 const EditarButton = styled.button`
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #252525;
+  font-size: 1rem;
+  transition: 0.2s;
+
+  &:hover {
+    color: #ff6d00;
+    transform: scale(1.4);
+  }
 `;
 
-const DeleteButton = styled(EditarButton)``;
+const DeleteButton = styled(EditarButton)`
+  margin: 0;
+
+  &:hover {
+    color: #bf360c;
+  }
+`;
 
 export {
   Container,

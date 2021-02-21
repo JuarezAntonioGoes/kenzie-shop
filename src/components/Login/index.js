@@ -30,11 +30,9 @@ const Login = () => {
   });
 
   const handleLogin = (data) => {
-    console.log(data);
     api
       .post("/sessions", data)
       .then((r) => {
-        console.log(r);
         localStorage.setItem("kenzie-user-tk", r.data.token);
         localStorage.setItem("kenzie-user-id", r.data.user.id);
         history.push("/user");
