@@ -1,57 +1,32 @@
 import React from "react";
-
+import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
-
-import { useHistory } from "react-router-dom";
-import api from "../../services/api";
 import InfoUser from "../../components/InfoUser";
 import Loading from "../../components/Loading";
-import ModalCadastroUser from "./ModalCadastroUser";
-
-import { UserContext } from "../../context/UserContext";
+import api from "../../services/api";
 
 const User = () => {
-  const history = useHistory();
-
   const [user, setUser] = React.useState({});
   const [loading, setLoading] = React.useState(true);
-  const [modalTec, setModalTec] = React.useState(false);
 
-  const idUser = localStorage.getItem("kenzie-user-id");
-  const token = localStorage.getItem("kenzie-user-tk");
+  const { id } = useParams();
 
-  const handleFetch = React.useCallback(() => {
+  React.useEffect(() => {
     setLoading(true);
-    api.get(`/users/${idUser}`).then((response) => {
+    api.get(`/users/${id}`).then((response) => {
       setUser({ ...response.data });
       setLoading(false);
     });
-  }, [idUser]);
-
-  React.useEffect(() => {
-    if (!idUser || !token) {
-      history.push("/");
-    }
-
-    handleFetch();
-  }, [idUser, token, history, handleFetch]);
+  }, [id]);
 
   return (
-    <UserContext token={token} handleFetch={handleFetch}>
+    <>
       <Header />
-      <InfoUser token={token} setModalTec={setModalTec} user={user} />
-
-      {modalTec && (
-        <ModalCadastroUser
-          setModalTec={setModalTec}
-          token={token}
-          handleFetch={handleFetch}
-        />
-      )}
+      <InfoUser user={user} admin={false} />
 
       {loading && <Loading />}
-    </UserContext>
+    </>
   );
 };
 
-export { User };
+export default User;

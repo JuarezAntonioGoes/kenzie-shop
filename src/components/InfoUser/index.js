@@ -17,12 +17,17 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import ModalDeleteTec from "./ModalDeleteTec";
 import ModalEditTec from "./ModalEditTec";
 
-const InfoUser = ({ user, setModalTec, token }) => {
+const InfoUser = ({ user, setModalTec, admin = false }) => {
   const { avatar_url, name, course_module, bio, techs = [] } = user;
   const [showDeleteTec, setShowDeleteTec] = React.useState(false);
   const [showEditTec, setShowEditTec] = React.useState(false);
   const [idTecDelete, setIdTecDelete] = React.useState("");
   const [idTecEdit, setIdTecEdit] = React.useState("");
+  const [userAdmin, setUserAdmin] = React.useState(false);
+
+  React.useEffect(() => {
+    setUserAdmin(admin);
+  }, [admin]);
 
   const handleDeleteTec = (e) => {
     const id = e.currentTarget.getAttribute("data-id");
@@ -59,24 +64,32 @@ const InfoUser = ({ user, setModalTec, token }) => {
 
           {techs.length ? (
             <ul>
-              <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
+              {userAdmin && (
+                <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
+              )}
 
               {techs.map(({ id, title, status }) => (
                 <Tecnologias key={id}>
                   <span>{title}</span>: {status}
-                  <EditarButton onClick={handleEditTec} data-id={id}>
-                    <FiEdit2 />
-                  </EditarButton>
-                  <DeleteButton onClick={handleDeleteTec} data-id={id}>
-                    <FiTrash2 />
-                  </DeleteButton>
+                  {userAdmin && (
+                    <>
+                      <EditarButton onClick={handleEditTec} data-id={id}>
+                        <FiEdit2 />
+                      </EditarButton>
+                      <DeleteButton onClick={handleDeleteTec} data-id={id}>
+                        <FiTrash2 />
+                      </DeleteButton>
+                    </>
+                  )}
                 </Tecnologias>
               ))}
             </ul>
           ) : (
             <>
               <p>Nenhuma tecnologia cadastrada...</p>
-              <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
+              {userAdmin && (
+                <ButtonAddTec onClick={() => setModalTec(true)}>+</ButtonAddTec>
+              )}
             </>
           )}
         </ContainerTec>

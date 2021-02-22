@@ -18,6 +18,7 @@ const ContainerUser = styled.div`
 
   p {
     margin-top: 0.7rem;
+    text-align: center;
   }
 
   span {

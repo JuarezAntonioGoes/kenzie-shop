@@ -6,7 +6,7 @@ const Tela = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: var(--color-theme);
+  background-color: #fff;
 
   display: flex;
   align-items: center;
@@ -59,7 +59,7 @@ const BolaUm = styled.div`
   height: 3rem;
   width: 3rem;
   margin: 0 0.8rem;
-  background-color: #fff;
+  background-color: var(--color-theme);
   border-radius: 50%;
 
   animation: ${animaBolaUm} 1s infinite;
